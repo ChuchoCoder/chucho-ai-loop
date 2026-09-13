@@ -279,8 +279,8 @@ function Assert-Slot {
     param([int]$Number, [string]$Branch, [switch]$RequireClean)
     $slot = Get-SlotPath $Number
     if (-not (Test-Path -LiteralPath $slot -PathType Container)) { throw "Issue #$Number has no worktree slot." }
-    $top = Invoke-NativeText git @('-C', $slot, 'rev-parse', '--show-toplevel')
-    if ((Get-CanonicalPath $top) -ne (Get-CanonicalPath $slot)) { throw "Issue #$Number slot is not its own worktree." }
+    $prefix = Invoke-NativeText git @('-C', $slot, 'rev-parse', '--show-prefix')
+    if (-not [string]::IsNullOrEmpty($prefix)) { throw "Issue #$Number slot is not its own worktree." }
     $current = Invoke-NativeText git @('-C', $slot, 'branch', '--show-current')
     if ($current -cne $Branch) { throw "Issue #$Number slot branch differs from its PR." }
     if ($RequireClean) {
