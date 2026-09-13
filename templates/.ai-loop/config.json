@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "repository": "owner/repository",
+  "baseBranch": "main",
+  "assistants": [
+    "Claude",
+    "ChatGPT"
+  ],
+  "testCommands": [
+    "npm test"
+  ],
+  "activeLimit": 1,
+  "pendingLimit": 3,
+  "maxReviewRounds": 2,
+  "merge": {
+    "mode": "manual",
+    "requiredChecks": []
+  }
+}

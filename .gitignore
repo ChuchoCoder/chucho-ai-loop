@@ -1,0 +1,7 @@
+# Estado local, locks y checkouts que crea el loop.
+.ai-loop/local/
+.ai-loop/state/
+.ai-loop/checkouts/
+
+# Artefactos de PowerShell.
+*.clixml
