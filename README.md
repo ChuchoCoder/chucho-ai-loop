@@ -104,16 +104,25 @@ Entran issues con una prioridad `priority/P0` a `priority/P3`. Los que tengan `b
 
 ```mermaid
 stateDiagram-v2
-    planificando --> en-dev
-    en-dev --> en-review
-    en-review --> corrigiendo
-    corrigiendo --> en-review
-    en-review --> review-final
-    review-final --> espera-merge
-    planificando --> necesita-humano
-    en-dev --> espera-auto
-    en-review --> espera-auto
-    review-final --> espera-auto
+    Planificando: planificando
+    EnDev: en-dev
+    EnReview: en-review
+    Corrigiendo: corrigiendo
+    ReviewFinal: review-final
+    EsperaMerge: espera-merge
+    EsperaAuto: espera-auto
+    NecesitaHumano: necesita-humano
+
+    Planificando --> EnDev
+    EnDev --> EnReview
+    EnReview --> Corrigiendo
+    Corrigiendo --> EnReview
+    EnReview --> ReviewFinal
+    ReviewFinal --> EsperaMerge
+    Planificando --> NecesitaHumano
+    EnDev --> EsperaAuto
+    EnReview --> EsperaAuto
+    ReviewFinal --> EsperaAuto
 ```
 
 `espera-auto` es una señal que el tick puede consultar de nuevo, como CI. `necesita-humano` detiene el avance hasta que una persona decida. Una label ambigua, PR equivocado, worktree sucio o lock imposible de verificar genera diagnóstico y deja el issue detenido.

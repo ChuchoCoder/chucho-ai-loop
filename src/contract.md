@@ -59,23 +59,32 @@ Estados admitidos:
 
 ```mermaid
 stateDiagram-v2
-    [*] --> planificando
-    planificando --> en-dev
-    en-dev --> en-review
-    en-review --> corrigiendo
-    corrigiendo --> en-review
-    en-review --> review-final
-    review-final --> espera-merge
-    en-dev --> espera-auto
-    en-review --> espera-auto
-    review-final --> espera-auto
-    espera-auto --> en-dev
-    espera-auto --> en-review
-    espera-auto --> review-final
-    planificando --> necesita-humano
-    en-dev --> necesita-humano
-    en-review --> necesita-humano
-    review-final --> necesita-humano
+    Planificando: planificando
+    EnDev: en-dev
+    EnReview: en-review
+    Corrigiendo: corrigiendo
+    ReviewFinal: review-final
+    EsperaMerge: espera-merge
+    EsperaAuto: espera-auto
+    NecesitaHumano: necesita-humano
+
+    [*] --> Planificando
+    Planificando --> EnDev
+    EnDev --> EnReview
+    EnReview --> Corrigiendo
+    Corrigiendo --> EnReview
+    EnReview --> ReviewFinal
+    ReviewFinal --> EsperaMerge
+    EnDev --> EsperaAuto
+    EnReview --> EsperaAuto
+    ReviewFinal --> EsperaAuto
+    EsperaAuto --> EnDev
+    EsperaAuto --> EnReview
+    EsperaAuto --> ReviewFinal
+    Planificando --> NecesitaHumano
+    EnDev --> NecesitaHumano
+    EnReview --> NecesitaHumano
+    ReviewFinal --> NecesitaHumano
 ```
 
 `espera-auto` significa que falta una señal que el loop puede volver a consultar, como CI o una respuesta de revisión. `necesita-humano` representa una decisión, ambigüedad o inconsistencia que no se resuelve en automático. `espera-merge` deja un PR listo para aprobación y merge humano. Cuando GitHub cierra ese issue, `SweepClosed` libera su estado administrativo; no se sale de `espera-merge` mediante `Transition`.
